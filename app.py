@@ -405,7 +405,7 @@ Provide clear, concise answers with relevant details from the documents.""",
                         except Exception as e:
                             st.error(f"❌ Error getting answer: {str(e)}")
         else:
-            st.info("👈 Upload PDFs and enter your API key to start")
+            st.info("👈 Upload PDFs and enter your API key to start also adjust parameters for longer or shorter answers.")
     
     # Footer
     st.divider()
