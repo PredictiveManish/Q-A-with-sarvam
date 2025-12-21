@@ -210,7 +210,7 @@ def main():
                 
     """)
     st.markdown("Go to [Sarvam AI Dashboard](https://dashboard.sarvam.ai/key-management), make an account, get 1000 free credits, and enjoy.")
-    
+
     
     # Sidebar for configuration
     with st.sidebar:
@@ -414,7 +414,7 @@ Provide clear, concise answers with relevant details from the documents.""",
         st.markdown(
             """
             <div style='text-align: center; padding: 20px;'>
-                <p style='color: #666;'>Built with ❤️ using Streamlit and Sarvam AI</p>
+                <p style='color: #666;'>Built with ❤️ using Sarvam AI and Streamlit</p>
                 <p style='color: #888; font-size: 0.9em;'>Upload PDFs • Ask Questions • Get Answers</p>
             </div>
             """,
