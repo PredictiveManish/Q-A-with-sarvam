@@ -5,3 +5,4 @@ fastembed
 python-dotenv
 pypdf
 pydantic
+dotenv
