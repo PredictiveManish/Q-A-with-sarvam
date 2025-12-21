@@ -264,7 +264,7 @@ def main():
     st.markdown(
         """
         <div style='text-align: center'>
-            <p>Built with ❤️ using Sarvam AI and time.</p>
+            <p>Built with ❤️ using Sarvam AI and Llamaindex.</p>
         </div>
         """,
         unsafe_allow_html=True
