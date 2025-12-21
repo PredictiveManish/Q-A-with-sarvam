@@ -206,7 +206,7 @@ def main():
     # Title and description
     st.title("📚 PDF Q&A with Sarvam AI")
     st.markdown("""
-    Upload your PDF documents and ask questions about their content using Sarvam AI.
+    Upload your PDF documents and ask questions about their content using Sarvam AI. Go to (Sarvam AI Dashboard)[https://dashboard.sarvam.ai/key-management] make account and get 1000 Free credits and enjoy.
     """)
     
     # Sidebar for configuration
