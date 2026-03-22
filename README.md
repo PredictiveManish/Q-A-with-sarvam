@@ -17,9 +17,10 @@ An interactive Streamlit application that enables intelligent question-answering
 - **Source Tracking**: View source documents and relevant passages
 - **System Prompt Customization**: Define assistant behavior and response guidelines
 
-## 🚀 Live Demo
+## 🚀 Live
 
-[Add your deployed app URL here once deployed]
+[Use here](https://sarvam-pdf-bot.streamlit.app/)
+<img width="1919" height="887" alt="Screenshot 2026-03-22 225658" src="https://github.com/user-attachments/assets/2d88dd28-50d8-4f9f-98fb-31247413f6a4" />
 
 ## 📋 Prerequisites
 
@@ -34,3 +35,4 @@ An interactive Streamlit application that enables intelligent question-answering
 git clone https://github.com/yourusername/pdf-qa-sarvam.git
 cd pdf-qa-sarvam
 ```
+2. 
