@@ -98,93 +98,102 @@ You are a helpful Q&A assistant. Answer questions based only on the provided doc
 If the answer is not in the documents, say "I cannot find this information in the provided documents."
 Provide clear, concise answers with relevant details from the documents.
 ```
+### 🏗️ Architecture
 
-🏗️ Architecture
 The application is built using:
 
-Frontend: Streamlit for interactive UI
+- **Frontend**: Streamlit for interactive UI
+- **Document Processing**: LlamaIndex for document indexing and retrieval
+- **Embeddings**: FastEmbed with BAAI/bge-small-en-v1.5
+- **Language Model**: Custom SarvamAI LLM wrapper for Sarvam AI API
+- **Vector Storage**: In-memory vector store
 
-Document Processing: LlamaIndex for document indexing and retrieval
+#### Workflow
 
-Embeddings: FastEmbed with BAAI/bge-small-en-v1.5
+| Step | Description |
+|------|-------------|
+| **Upload** | PDF files are uploaded and temporarily stored |
+| **Processing** | Documents are chunked and embedded using FastEmbed |
+| **Indexing** | VectorStoreIndex creates searchable embeddings |
+| **Querying** | User questions trigger semantic search and LLM response generation |
+| **Response** | Answers with source references are displayed |
 
-Language Model: Custom SarvamAI LLM wrapper for Sarvam AI API
+---
 
-Vector Storage: In-memory vector store
+### 🔧 Troubleshooting
 
-Workflow
-Upload: PDF files are uploaded and temporarily stored
+#### Common Issues
 
-Processing: Documents are chunked and embedded using FastEmbed
+<details>
+<summary><b>API Connection Error</b></summary>
 
-Indexing: VectorStoreIndex creates searchable embeddings
+- Verify your API key is correct
+- Check internet connection
+- Ensure the base URL is correct (default: `https://api.sarvam.ai`)
+</details>
 
-Querying: User questions trigger semantic search and LLM response generation
+<details>
+<summary><b>Document Processing Failed</b></summary>
 
-Response: Answers with source references are displayed
+- Ensure PDF files are not corrupted
+- Check that the file size is reasonable (< 10MB recommended)
+- Verify chunk size isn't too large for your system memory
+</details>
 
-🔧 Troubleshooting
-Common Issues
-API Connection Error
+<details>
+<summary><b>Slow Responses</b></summary>
 
-Verify your API key is correct
+- Reduce chunk size for faster processing
+- Lower the Top K retrieval value
+- Decrease max response tokens
+</details>
 
-Check internet connection
+<details>
+<summary><b>Memory Issues</b></summary>
 
-Ensure the base URL is correct (default: https://api.sarvam.ai)
+- Process documents in smaller batches
+- Reduce chunk size
+- Clear session and restart the app
+</details>
 
-Document Processing Failed
+---
 
-Ensure PDF files are not corrupted
+### 🤝 Contributing
 
-Check that the file size is reasonable (< 10MB recommended)
-
-Verify chunk size isn't too large for your system memory
-
-Slow Responses
-
-Reduce chunk size for faster processing
-
-Lower the Top K retrieval value
-
-Decrease max response tokens
-
-Memory Issues
-
-Process documents in smaller batches
-
-Reduce chunk size
-
-Clear session and restart the app
-
-🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-Fork the repository
+```bash
+# Fork the repository
+# Create your feature branch
+git checkout -b feature/AmazingFeature
 
-Create your feature branch (git checkout -b feature/AmazingFeature)
+# Commit your changes
+git commit -m 'Add some AmazingFeature'
 
-Commit your changes (git commit -m 'Add some AmazingFeature')
+# Push to the branch
+git push origin feature/AmazingFeature
 
-Push to the branch (git push origin feature/AmazingFeature)
+# Open a Pull Request
+```
+### 🙏 Acknowledgments
 
-Open a Pull Request
+- **[Sarvam AI](https://sarvam.ai)** — for providing the language model API
+- **[LlamaIndex](https://www.llamaindex.ai)** — for document indexing and retrieval framework
+- **[Streamlit](https://streamlit.io)** — for the interactive web interface
+- **[FastEmbed](https://github.com/qdrant/fastembed)** — for efficient embeddings
 
-📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+---
 
-🙏 Acknowledgments
-Sarvam AI for providing the language model API
+### 📧 Contact
 
-LlamaIndex for document indexing and retrieval framework
+**Manish Tiwari**
 
-Streamlit for the interactive web interface
+- 🐦 Twitter: [@compmanish](https://x.com/compmanish)
+- 📧 Email: [Mail](mailto:manish.tiwari.09@zohomail.in)
+- 🔗 Project Link: [https://github.com/predictivemanish/pdf-qa-sarvam](https://github.com/predictivemanish/pdf-qa-sarvam)
 
-FastEmbed for efficient embeddings
+---
 
-📧 Contact
-Your Name - @yourtwitter - email@example.com
+### 💡 Note
 
-Project Link: https://github.com/yourusername/pdf-qa-sarvam
-
-Note: This application requires a Sarvam AI API key. You can get 1000 free credits by signing up at the Sarvam AI Dashboard.
+> This application requires a **Sarvam AI API key**. You can get **1000 free credits** by signing up at the [Sarvam AI Dashboard](https://dashboard.sarvam.ai).
