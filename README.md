@@ -35,4 +35,156 @@ An interactive Streamlit application that enables intelligent question-answering
 git clone https://github.com/yourusername/pdf-qa-sarvam.git
 cd pdf-qa-sarvam
 ```
-2. 
+2. Create and activate a virtual environment (optional but recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+4. Dependencies
+The application requires the following packages:
+
+text
+streamlit
+llama-index
+llama-index-embeddings-fastembed
+requests
+PyPDF2
+You can install them directly:
+```bash
+pip install streamlit llama-index llama-index-embeddings-fastembed requests
+```
+Usage
+Start the Streamlit application
+```bash
+streamlit run app.py
+```
+### Configure the application (sidebar)
+- Enter your Sarvam AI API key
+- Optionally modify the base URL (default: https://api.sarvam.ai)
+- Adjust model settings as needed
+- Customize the system prompt for assistant behavior
+- Upload Documents
+- Click "Browse files" to select PDF documents
+- Multiple files can be uploaded simultaneously
+- Process Documents
+- Click "Process Documents" to index your PDFs
+- Wait for the processing to complete
+- Ask Questions
+- Enter your question in the text input field
+- Click "Get Answer" to receive a response
+- View source documents in the expandable section
+
+### ⚙️ Configuration Options
+
+**Model Settings**
+- Context Window Size: 1024-8192 tokens (default: 4500)
+- Max Response Tokens: 64-2048 tokens (default: 512)
+- Chunk Size: 256-4096 tokens (default: 1024)
+
+**Advanced Options**
+- Temperature: 0.0-1.0 (default: 0.1) - Controls response randomness
+- Top K Retrieval: 1-10 (default: 3) - Number of document chunks to retrieve
+
+**System Prompt**
+Customize the assistant's behavior and response guidelines. Default prompt:
+
+```text
+You are a helpful Q&A assistant. Answer questions based only on the provided documents. 
+If the answer is not in the documents, say "I cannot find this information in the provided documents."
+Provide clear, concise answers with relevant details from the documents.
+```
+
+🏗️ Architecture
+The application is built using:
+
+Frontend: Streamlit for interactive UI
+
+Document Processing: LlamaIndex for document indexing and retrieval
+
+Embeddings: FastEmbed with BAAI/bge-small-en-v1.5
+
+Language Model: Custom SarvamAI LLM wrapper for Sarvam AI API
+
+Vector Storage: In-memory vector store
+
+Workflow
+Upload: PDF files are uploaded and temporarily stored
+
+Processing: Documents are chunked and embedded using FastEmbed
+
+Indexing: VectorStoreIndex creates searchable embeddings
+
+Querying: User questions trigger semantic search and LLM response generation
+
+Response: Answers with source references are displayed
+
+🔧 Troubleshooting
+Common Issues
+API Connection Error
+
+Verify your API key is correct
+
+Check internet connection
+
+Ensure the base URL is correct (default: https://api.sarvam.ai)
+
+Document Processing Failed
+
+Ensure PDF files are not corrupted
+
+Check that the file size is reasonable (< 10MB recommended)
+
+Verify chunk size isn't too large for your system memory
+
+Slow Responses
+
+Reduce chunk size for faster processing
+
+Lower the Top K retrieval value
+
+Decrease max response tokens
+
+Memory Issues
+
+Process documents in smaller batches
+
+Reduce chunk size
+
+Clear session and restart the app
+
+🤝 Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+Fork the repository
+
+Create your feature branch (git checkout -b feature/AmazingFeature)
+
+Commit your changes (git commit -m 'Add some AmazingFeature')
+
+Push to the branch (git push origin feature/AmazingFeature)
+
+Open a Pull Request
+
+📝 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+🙏 Acknowledgments
+Sarvam AI for providing the language model API
+
+LlamaIndex for document indexing and retrieval framework
+
+Streamlit for the interactive web interface
+
+FastEmbed for efficient embeddings
+
+📧 Contact
+Your Name - @yourtwitter - email@example.com
+
+Project Link: https://github.com/yourusername/pdf-qa-sarvam
+
+Note: This application requires a Sarvam AI API key. You can get 1000 free credits by signing up at the Sarvam AI Dashboard.
