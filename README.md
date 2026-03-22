@@ -1,9 +1,36 @@
-This project is based on Sarvam and Llama Index where we can directly add your Sarvam API KEY from their dashboard go to [Sarvam Dashboard](https://dashboard.sarvam.ai/key-management) 
-Signup and generate a key and paste in the website. and BAM
+# 📚 PDF Q&A with Sarvam AI
 
-Why you want to clone bro 😒 when you've link in description. Use it directly. 
-If needed any feature just open issue I will do it for you. 
+An interactive Streamlit application that enables intelligent question-answering over PDF documents using Sarvam AI's powerful language models. Upload your PDFs, ask questions, and get accurate answers based on the document content.
 
-<img width="1919" height="887" alt="image" src="https://github.com/user-attachments/assets/54cbb2aa-7332-44f0-9022-432d0e671293" />
+## ✨ Features
 
-Thanks for support. 
+- **PDF Document Processing**: Upload and process multiple PDF files
+- **Intelligent Q&A**: Ask questions about your documents and get contextual answers
+- **Sarvam AI Integration**: Leverages Sarvam AI's language models for high-quality responses
+- **Vector Search**: Uses embeddings for semantic search and relevant content retrieval
+- **Customizable Settings**: 
+  - Adjust context window size
+  - Control response token length
+  - Modify chunk size for document processing
+  - Configure retrieval parameters (Top K)
+  - Set temperature for response creativity
+- **Source Tracking**: View source documents and relevant passages
+- **System Prompt Customization**: Define assistant behavior and response guidelines
+
+## 🚀 Live Demo
+
+[Add your deployed app URL here once deployed]
+
+## 📋 Prerequisites
+
+- Python 3.8 or higher
+- Sarvam AI API key ([Get your free credits here](https://dashboard.sarvam.ai/key-management))
+- Internet connection for API access
+
+## 🛠️ Installation
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/yourusername/pdf-qa-sarvam.git
+cd pdf-qa-sarvam
+```
