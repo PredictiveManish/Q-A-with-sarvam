@@ -6,6 +6,7 @@ import json
 from typing import Optional, List, Dict, Any
 import time
 from pathlib import Path
+import pandas as pd
 
 # Import LlamaIndex components (these are available on PyPI)
 try:
@@ -17,6 +18,7 @@ try:
     from llama_index.core.llms import LLM, CompletionResponse
     from llama_index.core.callbacks import CallbackManager
     from llama_index.core.base.llms.types import LLMMetadata
+    from llama_index.readers.file import DocxReader, CSVReader, PptxReader
     import llama_index.core
 except ImportError as e:
     st.error(f"Import error: {e}")
@@ -151,37 +153,163 @@ def test_sarvam_api(api_key: str, base_url: str) -> bool:
     except:
         return False
 
+def get_reader_for_file(file_path: str):
+    """Return appropriate reader based on file extension"""
+    file_ext = Path(file_path).suffix.lower()
+    if file_ext == '.pdf':
+        return None # Using SimpleDirectoryReader for PDFs
+    elif file_ext == '.docx':
+        return DocxReader()
+    elif file_ext == '.csv':
+        return CSVReader()
+    elif file_ext == '.pptx':
+        return PptxReader()
+    else:
+        return None
+    
+
+# def process_documents(file_paths, api_key, base_url, context_window=4500, max_tokens=512, chunk_size=1024):
+#     """Process uploaded PDF documents and create index"""
+#     try:
+#         # Test API connection first
+#         with st.spinner("Testing API connection..."):
+#             if not test_sarvam_api(api_key, base_url):
+#                 st.error("❌ Failed to connect to Sarvam API. Please check your API key and base URL.")
+#                 return False
+#             st.success("✅ API connection successful!")
+        
+#         # Initialize Sarvam LLM
+#         llm = SarvamLLM(api_key=api_key, base_url=base_url)
+        
+#         # Initialize embedding model
+#         embed_model = FastEmbedEmbedding(model_name="BAAI/bge-small-en-v1.5")
+        
+#         # Configure settings
+#         Settings.llm = llm
+#         Settings.embed_model = embed_model
+#         Settings.chunk_size = chunk_size
+#         Settings.chunk_overlap = 200
+        
+#         # Load documents
+#         with st.spinner("Loading and processing documents..."):
+#             documents = SimpleDirectoryReader(input_files=file_paths).load_data()
+#             st.success(f"✅ Loaded {len(documents)} document chunks")
+        
+#         # Create index
+#         with st.spinner("Creating search index..."):
+#             index = VectorStoreIndex.from_documents(
+#                 documents,
+#                 show_progress=True
+#             )
+            
+#             # Create query engine
+#             query_engine = index.as_query_engine(
+#                 similarity_top_k=3,
+#                 response_mode="compact"
+#             )
+            
+#             # Store in session state
+#             st.session_state.index = index
+#             st.session_state.query_engine = query_engine
+#             st.session_state.processing_complete = True
+            
+#         return True
+        
+#     except Exception as e:
+#         st.error(f"❌ Error processing documents: {str(e)}")
+#         return False
+
 def process_documents(file_paths, api_key, base_url, context_window=4500, max_tokens=512, chunk_size=1024):
-    """Process uploaded PDF documents and create index"""
+    """Process uploaded documents of various formats and create index"""
     try:
-        # Test API connection first
+        # Trying API connection first
         with st.spinner("Testing API connection..."):
             if not test_sarvam_api(api_key, base_url):
-                st.error("❌ Failed to connect to Sarvam API. Please check your API key and base URL.")
+                st.error("Failed to connect to Sarvam API.")
                 return False
-            st.success("✅ API connection successful!")
-        
+            st.success("API connection successful.")
+    except FileNotFoundError:
+        print("Error: No API endpoint found!")
         # Initialize Sarvam LLM
         llm = SarvamLLM(api_key=api_key, base_url=base_url)
-        
+
         # Initialize embedding model
         embed_model = FastEmbedEmbedding(model_name="BAAI/bge-small-en-v1.5")
-        
+
         # Configure settings
         Settings.llm = llm
         Settings.embed_model = embed_model
         Settings.chunk_size = chunk_size
         Settings.chunk_overlap = 200
-        
-        # Load documents
+
+        # Load documents with format-specific handling
+        all_documents = []
+
         with st.spinner("Loading and processing documents..."):
-            documents = SimpleDirectoryReader(input_files=file_paths).load_data()
-            st.success(f"✅ Loaded {len(documents)} document chunks")
+            for file_path in file_path:
+                file_ext = Path(file_path).suffix.lower()
+                file_name = Path(file_path).name
+
+                try:
+                    if file_ext == '.txt' or file_ext == '.md':
+                        # Handle text/markdown files
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            content = f.read()
+                            from llama_index.core.schema import Document
+                        doc = Document(text=content, metadata={"file_name": file_name, "file_type": file_ext})
+                        all_documents.append(doc)
+                    
+                    elif file_ext == '.docx':
+                        reader = DocxReader()
+                        docs = reader.load_data(file=file_path)
+                        for doc in docs:
+                            doc.metadata["file_name"] = file_name
+                        all_documents.extend(docs)
+                    
+                    elif file_ext == '.csv':
+                        reader = CSVReader()
+                        docs = reader.load_data(file=file_path)
+                        for doc in docs:
+                            doc.metadata["file_name"] = file_name
+                        all_documents.extend(docs)
+                    
+                    elif file_ext == '.pptx':
+                        reader = PptxReader()
+                        docs = reader.load_data(file=file_path)
+                        for doc in docs:
+                            doc.metadata["file_name"] = file_name
+                        all_documents.extend(docs)
+                    
+                    elif file_ext == '.xlsx':
+                        # For Excel files, use pandas
+                        import pandas as pd
+                        df = pd.read_excel(file_path)
+                        content = df.to_string()
+                        from llama_index.core.schema import Document
+                        doc = Document(text=content, metadata={"file_name": file_name, "file_type": file_ext})
+                        all_documents.append(doc)
+                    
+                    else:  # PDF and other formats
+                        docs = SimpleDirectoryReader(input_files=[file_path]).load_data()
+                        for doc in docs:
+                            if not hasattr(doc, 'metadata'):
+                                doc.metadata = {}
+                            doc.metadata["file_name"] = file_name
+                        all_documents.extend(docs)
+                    
+                except Exception as e:
+                    st.error(f"Error processing {file_name}: {str(e)}")
+            
+            if not all_documents:
+                st.error("No documents could be processed successfully")
+                return False
+                
+            st.success(f"Loaded {len(all_documents)} document chunks from {len(file_paths)} files")
         
         # Create index
         with st.spinner("Creating search index..."):
             index = VectorStoreIndex.from_documents(
-                documents,
+                all_documents,
                 show_progress=True
             )
             
@@ -199,8 +327,9 @@ def process_documents(file_paths, api_key, base_url, context_window=4500, max_to
         return True
         
     except Exception as e:
-        st.error(f"❌ Error processing documents: {str(e)}")
+        st.error(f"Error processing documents: {str(e)}")
         return False
+
 
 def main():
     # Title and description
@@ -304,13 +433,14 @@ Provide clear, concise answers with relevant details from the documents.""",
     
     with col1:
         st.header("📤 Upload Documents")
-        
+        # ALLOWED_TYPES = ['pdf','docs','docx','txt', 'md', 'csv','xlsx','pptx']
+        ALLOWED_TYPES = ['pdf', 'docx', 'txt', 'md', 'csv', 'xlsx', 'pptx']
         # File uploader
         uploaded_files = st.file_uploader(
             "Choose PDF files",
-            type=['pdf'],
+            type=ALLOWED_TYPES,
             accept_multiple_files=True,
-            help="Upload one or more PDF documents"
+            help="Supported formats: PDF, Word(docx), Text, Markdown, CSV, Excel, PPT"
         )
         
         if uploaded_files:

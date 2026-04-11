@@ -6,3 +6,7 @@ pypdf
 requests
 python-dotenv
 pydantic
+pandas
+openpyxl
+python-docx
+python-pptx
