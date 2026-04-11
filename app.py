@@ -168,57 +168,6 @@ def get_reader_for_file(file_path: str):
         return None
     
 
-# def process_documents(file_paths, api_key, base_url, context_window=4500, max_tokens=512, chunk_size=1024):
-#     """Process uploaded PDF documents and create index"""
-#     try:
-#         # Test API connection first
-#         with st.spinner("Testing API connection..."):
-#             if not test_sarvam_api(api_key, base_url):
-#                 st.error("❌ Failed to connect to Sarvam API. Please check your API key and base URL.")
-#                 return False
-#             st.success("✅ API connection successful!")
-        
-#         # Initialize Sarvam LLM
-#         llm = SarvamLLM(api_key=api_key, base_url=base_url)
-        
-#         # Initialize embedding model
-#         embed_model = FastEmbedEmbedding(model_name="BAAI/bge-small-en-v1.5")
-        
-#         # Configure settings
-#         Settings.llm = llm
-#         Settings.embed_model = embed_model
-#         Settings.chunk_size = chunk_size
-#         Settings.chunk_overlap = 200
-        
-#         # Load documents
-#         with st.spinner("Loading and processing documents..."):
-#             documents = SimpleDirectoryReader(input_files=file_paths).load_data()
-#             st.success(f"✅ Loaded {len(documents)} document chunks")
-        
-#         # Create index
-#         with st.spinner("Creating search index..."):
-#             index = VectorStoreIndex.from_documents(
-#                 documents,
-#                 show_progress=True
-#             )
-            
-#             # Create query engine
-#             query_engine = index.as_query_engine(
-#                 similarity_top_k=3,
-#                 response_mode="compact"
-#             )
-            
-#             # Store in session state
-#             st.session_state.index = index
-#             st.session_state.query_engine = query_engine
-#             st.session_state.processing_complete = True
-            
-#         return True
-        
-#     except Exception as e:
-#         st.error(f"❌ Error processing documents: {str(e)}")
-#         return False
-
 def process_documents(file_paths, api_key, base_url, context_window=4500, max_tokens=512, chunk_size=1024):
     """Process uploaded documents of various formats and create index"""
     try:
@@ -333,7 +282,7 @@ def process_documents(file_paths, api_key, base_url, context_window=4500, max_to
 
 def main():
     # Title and description
-    st.title("📚 PDF Q&A with Sarvam AI")
+    st.title("PDF Q&A with Sarvam AI")
     st.markdown("""
     Upload your PDF documents and ask questions about their content using Sarvam AI. 
                 
@@ -343,7 +292,7 @@ def main():
     
     # Sidebar for configuration
     with st.sidebar:
-        st.header("⚙️ Configuration")
+        st.header("Configuration")
         
         # API Key input
         api_key = st.text_input(
@@ -371,7 +320,7 @@ def main():
                     if test_sarvam_api(api_key, base_url):
                         st.success("✅ API connection successful!")
                     else:
-                        st.error("❌ Failed to connect to API")
+                        st.error("Failed to connect to API")
         
         st.divider()
         
@@ -423,7 +372,7 @@ Provide clear, concise answers with relevant details from the documents.""",
         st.divider()
         
         # Clear session button
-        if st.button("🔄 Clear Session", type="secondary", use_container_width=True):
+        if st.button("Clear Session", type="secondary", use_container_width=True):
             for key in list(st.session_state.keys()):
                 del st.session_state[key]
             st.rerun()
@@ -433,7 +382,6 @@ Provide clear, concise answers with relevant details from the documents.""",
     
     with col1:
         st.header("📤 Upload Documents")
-        # ALLOWED_TYPES = ['pdf','docs','docx','txt', 'md', 'csv','xlsx','pptx']
         ALLOWED_TYPES = ['pdf', 'docx', 'txt', 'md', 'csv', 'xlsx', 'pptx']
         # File uploader
         uploaded_files = st.file_uploader(
@@ -447,7 +395,14 @@ Provide clear, concise answers with relevant details from the documents.""",
             st.session_state.uploaded_files = uploaded_files
             st.write(f"**Selected files:**")
             for file in uploaded_files:
-                st.write(f"- {file.name} ({file.size / 1024:.1f} KB)")
+                # show file type icon based on extension
+                ext = Path(file.name).suffix.lower()
+                icon_map = {
+                '.pdf': '📄', '.docx': '📝', '.txt': '📃', 
+                '.md': '📋', '.csv': '📊', '.xlsx': '📈', '.pptx': '📽️'
+                }
+                icon = icon_map.get(ext,'📎')
+                st.write(f"{icon} {file.name} ({file.size / 1024:.1f} KB)")
         
         # Process button
         if st.session_state.uploaded_files and st.session_state.api_key:
@@ -467,15 +422,15 @@ Provide clear, concise answers with relevant details from the documents.""",
                     )
                     
                     if success:
-                        st.success("✅ Documents processed successfully! You can now ask questions.")
+                        st.success("Documents processed successfully! You can now ask questions.")
                     else:
-                        st.error("❌ Failed to process documents")
+                        st.error("Failed to process documents")
         
         elif st.session_state.uploaded_files and not st.session_state.api_key:
-            st.warning("⚠️ Please enter your Sarvam API key in the sidebar")
+            st.warning("Please enter your Sarvam API key in the sidebar")
     
     with col2:
-        st.header("💬 Ask Questions")
+        st.header("Ask Questions")
         
         if st.session_state.processing_complete:
             # Question input
@@ -486,7 +441,7 @@ Provide clear, concise answers with relevant details from the documents.""",
             )
             
             # Advanced options
-            with st.expander("⚡ Advanced Options"):
+            with st.expander("Advanced Options"):
                 temperature = st.slider(
                     "Temperature",
                     min_value=0.0,
@@ -505,7 +460,7 @@ Provide clear, concise answers with relevant details from the documents.""",
                 )
             
             if question:
-                if st.button("🔍 Get Answer", type="primary", use_container_width=True):
+                if st.button("Get Answer", type="primary", use_container_width=True):
                     with st.spinner("Thinking..."):
                         try:
                             # Update query engine with new settings
@@ -521,19 +476,19 @@ Provide clear, concise answers with relevant details from the documents.""",
                             response = st.session_state.query_engine.query(enhanced_question)
                             
                             # Display response
-                            st.subheader("📝 Answer:")
+                            st.subheader("Answer:")
                             st.write(str(response))
                             
                             # Show sources if available
                             if hasattr(response, 'source_nodes') and response.source_nodes:
-                                with st.expander("📄 View Sources"):
+                                with st.expander("View Sources"):
                                     for i, node in enumerate(response.source_nodes[:3]):
                                         st.write(f"**Source {i+1}:**")
                                         st.text(node.text[:300] + "..." if len(node.text) > 300 else node.text)
                                         st.divider()
                             
                         except Exception as e:
-                            st.error(f"❌ Error getting answer: {str(e)}")
+                            st.error(f"Error getting answer: {str(e)}")
         else:
             st.info("👈 Upload PDFs and enter your API key to start also adjust parameters for longer or shorter answers.")
     

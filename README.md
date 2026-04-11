@@ -2,6 +2,10 @@
 
 An interactive Streamlit application that enables intelligent question-answering over PDF documents using Sarvam AI's powerful language models. Upload your PDFs, ask questions, and get accurate answers based on the document content.
 
+> ### 💡 Note
+
+This application requires a **Sarvam AI API key**. You can get **1000 free credits** by signing up at the [Sarvam AI Dashboard](https://dashboard.sarvam.ai).
+
 ## ✨ Features
 
 - **PDF Document Processing**: Upload and process multiple PDF files
@@ -194,6 +198,4 @@ git push origin feature/AmazingFeature
 
 ---
 
-### 💡 Note
 
-> This application requires a **Sarvam AI API key**. You can get **1000 free credits** by signing up at the [Sarvam AI Dashboard](https://dashboard.sarvam.ai).
