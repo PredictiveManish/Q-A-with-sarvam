@@ -1,14 +1,14 @@
-# 📚 PDF Q&A with Sarvam AI
+# 📄 Multi-Format Q&A with Sarvam AI
 
-An interactive Streamlit application that enables intelligent question-answering over PDF documents using Sarvam AI's powerful language models. Upload your PDFs, ask questions, and get accurate answers based on the document content.
+An interactive Streamlit application that enables intelligent question-answering over multiple document formats using Sarvam AI's powerful language models. Upload your documents (PDF, Word, Text, CSV, Excel, PPT, etc.), ask questions, and get accurate answers based on the document content.
 
 > ### 💡 Note
-
-This application requires a **Sarvam AI API key**. You can get **1000 free credits** by signing up at the [Sarvam AI Dashboard](https://dashboard.sarvam.ai).
+>
+> This application requires a **Sarvam AI API key**. You can get **1000 free credits** by signing up at the [Sarvam AI Dashboard](https://dashboard.sarvam.ai).
 
 ## ✨ Features
 
-- **PDF Document Processing**: Upload and process multiple PDF files
+- **Multi-Format Document Processing**: Upload and process multiple document types (PDF, DOCX, TXT, MD, CSV, XLSX, PPTX)
 - **Intelligent Q&A**: Ask questions about your documents and get contextual answers
 - **Sarvam AI Integration**: Leverages Sarvam AI's language models for high-quality responses
 - **Vector Search**: Uses embeddings for semantic search and relevant content retrieval
@@ -52,15 +52,20 @@ pip install -r requirements.txt
 4. Dependencies
 The application requires the following packages:
 
-text
+```
 streamlit
 llama-index
 llama-index-embeddings-fastembed
 requests
 PyPDF2
+python-docx
+pandas
+openpyxl
+python-pptx
+```
 You can install them directly:
 ```bash
-pip install streamlit llama-index llama-index-embeddings-fastembed requests
+pip install streamlit llama-index llama-index-embeddings-fastembed requests PyPDF2 python-docx pandas openpyxl python-pptx
 ```
 Usage
 Start the Streamlit application
@@ -73,10 +78,10 @@ streamlit run app.py
 - Adjust model settings as needed
 - Customize the system prompt for assistant behavior
 - Upload Documents
-- Click "Browse files" to select PDF documents
+- Click "Browse files" to select document documents
 - Multiple files can be uploaded simultaneously
 - Process Documents
-- Click "Process Documents" to index your PDFs
+- Click "Process Documents" to index your documents
 - Wait for the processing to complete
 - Ask Questions
 - Enter your question in the text input field
@@ -116,8 +121,8 @@ The application is built using:
 
 | Step | Description |
 |------|-------------|
-| **Upload** | PDF files are uploaded and temporarily stored |
-| **Processing** | Documents are chunked and embedded using FastEmbed |
+| **Upload** | Document files are uploaded and temporarily stored |
+| **Processing** | Documents are chunked and embedded using FastEmbed (format-specific readers used when available) |
 | **Indexing** | VectorStoreIndex creates searchable embeddings |
 | **Querying** | User questions trigger semantic search and LLM response generation |
 | **Response** | Answers with source references are displayed |
@@ -139,9 +144,10 @@ The application is built using:
 <details>
 <summary><b>Document Processing Failed</b></summary>
 
-- Ensure PDF files are not corrupted
+- Ensure document files are not corrupted
 - Check that the file size is reasonable (< 10MB recommended)
 - Verify chunk size isn't too large for your system memory
+- Ensure required format-specific libraries are installed (python-docx, pandas, openpyxl, python-pptx)
 </details>
 
 <details>
@@ -197,5 +203,3 @@ git push origin feature/AmazingFeature
 - 🔗 Project Link: [https://github.com/predictivemanish/pdf-qa-sarvam](https://github.com/predictivemanish/pdf-qa-sarvam)
 
 ---
-
-
