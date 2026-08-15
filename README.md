@@ -1,205 +1,96 @@
-# 📄 Multi-Format Q&A with Sarvam AI
+# Document Q&A with Sarvam AI
 
-An interactive Streamlit application that enables intelligent question-answering over multiple document formats using Sarvam AI's powerful language models. Upload your documents (PDF, Word, Text, CSV, Excel, PPT, etc.), ask questions, and get accurate answers based on the document content.
+An interactive Streamlit application for intelligent question-answering over documents using **Sarvam AI's Sarvam-105B** flagship model. Upload your documents, ask questions, and get accurate, source-grounded answers with streaming responses.
 
-> ### 💡 Note
->
-> This application requires a **Sarvam AI API key**. You can get **1000 free credits** by signing up at the [Sarvam AI Dashboard](https://dashboard.sarvam.ai).
+## Features
 
-## ✨ Features
+- **Multi-Format Support**: PDF, DOCX, TXT, MD, CSV, XLSX, PPTX
+- **Sarvam-105B Model**: Flagship 105B parameter model for highest quality answers
+- **Streaming Responses**: See answers generated in real-time
+- **Vector Search**: Semantic retrieval from your documents using BAAI/bge-small-en-v1.5 embeddings
+- **Chat History**: Conversational context over your documents
+- **Source Tracking**: View which document chunks informed each answer
+- **Configurable**: Model selection, temperature, chunk size, retrieval depth, reasoning effort
+- **System Prompt**: Customize assistant behavior
 
-- **Multi-Format Document Processing**: Upload and process multiple document types (PDF, DOCX, TXT, MD, CSV, XLSX, PPTX)
-- **Intelligent Q&A**: Ask questions about your documents and get contextual answers
-- **Sarvam AI Integration**: Leverages Sarvam AI's language models for high-quality responses
-- **Vector Search**: Uses embeddings for semantic search and relevant content retrieval
-- **Customizable Settings**: 
-  - Adjust context window size
-  - Control response token length
-  - Modify chunk size for document processing
-  - Configure retrieval parameters (Top K)
-  - Set temperature for response creativity
-- **Source Tracking**: View source documents and relevant passages
-- **System Prompt Customization**: Define assistant behavior and response guidelines
+## Prerequisites
 
-## 🚀 Live
+- Python 3.9+
+- Sarvam AI API key ([Get 1000 free credits](https://dashboard.sarvam.ai/key-management))
+- Internet connection
 
-[Use here](https://sarvam-pdf-bot.streamlit.app/)
-<img width="1919" height="887" alt="Screenshot 2026-03-22 225658" src="https://github.com/user-attachments/assets/2d88dd28-50d8-4f9f-98fb-31247413f6a4" />
-
-## 📋 Prerequisites
-
-- Python 3.8 or higher
-- Sarvam AI API key ([Get your free credits here](https://dashboard.sarvam.ai/key-management))
-- Internet connection for API access
-
-## 🛠️ Installation
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/yourusername/pdf-qa-sarvam.git
-cd pdf-qa-sarvam
-```
-2. Create and activate a virtual environment (optional but recommended)
+## Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/PredictiveManish/Q-A-with-sarvam.git
+cd Q-A-with-sarvam
+
+# Create and activate virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-3. Install dependencies
-```bash
-pip install -r requirements.txt
-```
-4. Dependencies
-The application requires the following packages:
+# Windows:
+venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
 
+# Install dependencies
+pip install -r requirements.txt
+
+# (Optional) Copy and configure .env
+cp .env.example .env
 ```
-streamlit
-llama-index
-llama-index-embeddings-fastembed
-requests
-PyPDF2
-python-docx
-pandas
-openpyxl
-python-pptx
-```
-You can install them directly:
-```bash
-pip install streamlit llama-index llama-index-embeddings-fastembed requests PyPDF2 python-docx pandas openpyxl python-pptx
-```
-Usage
-Start the Streamlit application
+
+## Usage
+
 ```bash
 streamlit run app.py
 ```
-### Configure the application (sidebar)
-- Enter your Sarvam AI API key
-- Optionally modify the base URL (default: https://api.sarvam.ai)
-- Adjust model settings as needed
-- Customize the system prompt for assistant behavior
-- Upload Documents
-- Click "Browse files" to select document documents
-- Multiple files can be uploaded simultaneously
-- Process Documents
-- Click "Process Documents" to index your documents
-- Wait for the processing to complete
-- Ask Questions
-- Enter your question in the text input field
-- Click "Get Answer" to receive a response
-- View source documents in the expandable section
 
-### ⚙️ Configuration Options
+1. Enter your Sarvam API key in the sidebar
+2. (Optional) Test the API connection
+3. The app uses **Sarvam-105B** (best quality) by default
+4. Upload documents
+5. Click **Process Documents**
+6. Ask questions and get streaming answers
 
-**Model Settings**
-- Context Window Size: 1024-8192 tokens (default: 4500)
-- Max Response Tokens: 64-2048 tokens (default: 512)
-- Chunk Size: 256-4096 tokens (default: 1024)
+## Configuration
 
-**Advanced Options**
-- Temperature: 0.0-1.0 (default: 0.1) - Controls response randomness
-- Top K Retrieval: 1-10 (default: 3) - Number of document chunks to retrieve
+| Setting | Default | Description |
+|---------|---------|-------------|
+| Model | sarvam-30b | Choose between fast (30B) and best (105B) |
+| Max Tokens | 1024 | Response length cap |
+| Chunk Size | 1024 | Document chunk size for indexing |
+| Temperature | 0.1 | Response randomness (0-1) |
+| Top P | 0.9 | Nucleus sampling parameter |
+| Top K Retrieval | 3 | Document chunks retrieved per query |
+| Reasoning Effort | low | none, low, medium, high |
 
-**System Prompt**
-Customize the assistant's behavior and response guidelines. Default prompt:
+## Architecture
 
-```text
-You are a helpful Q&A assistant. Answer questions based only on the provided documents. 
-If the answer is not in the documents, say "I cannot find this information in the provided documents."
-Provide clear, concise answers with relevant details from the documents.
 ```
-### 🏗️ Architecture
-
-The application is built using:
-
-- **Frontend**: Streamlit for interactive UI
-- **Document Processing**: LlamaIndex for document indexing and retrieval
-- **Embeddings**: FastEmbed with BAAI/bge-small-en-v1.5
-- **Language Model**: Custom SarvamAI LLM wrapper for Sarvam AI API
-- **Vector Storage**: In-memory vector store
-
-#### Workflow
-
-| Step | Description |
-|------|-------------|
-| **Upload** | Document files are uploaded and temporarily stored |
-| **Processing** | Documents are chunked and embedded using FastEmbed (format-specific readers used when available) |
-| **Indexing** | VectorStoreIndex creates searchable embeddings |
-| **Querying** | User questions trigger semantic search and LLM response generation |
-| **Response** | Answers with source references are displayed |
-
----
-
-### 🔧 Troubleshooting
-
-#### Common Issues
-
-<details>
-<summary><b>API Connection Error</b></summary>
-
-- Verify your API key is correct
-- Check internet connection
-- Ensure the base URL is correct (default: `https://api.sarvam.ai`)
-</details>
-
-<details>
-<summary><b>Document Processing Failed</b></summary>
-
-- Ensure document files are not corrupted
-- Check that the file size is reasonable (< 10MB recommended)
-- Verify chunk size isn't too large for your system memory
-- Ensure required format-specific libraries are installed (python-docx, pandas, openpyxl, python-pptx)
-</details>
-
-<details>
-<summary><b>Slow Responses</b></summary>
-
-- Reduce chunk size for faster processing
-- Lower the Top K retrieval value
-- Decrease max response tokens
-</details>
-
-<details>
-<summary><b>Memory Issues</b></summary>
-
-- Process documents in smaller batches
-- Reduce chunk size
-- Clear session and restart the app
-</details>
-
----
-
-### 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-```bash
-# Fork the repository
-# Create your feature branch
-git checkout -b feature/AmazingFeature
-
-# Commit your changes
-git commit -m 'Add some AmazingFeature'
-
-# Push to the branch
-git push origin feature/AmazingFeature
-
-# Open a Pull Request
+Upload → Chunk & Embed → Vector Index → Retrieve Context → Stream Answer
 ```
-### 🙏 Acknowledgments
 
-- **[Sarvam AI](https://sarvam.ai)** — for providing the language model API
-- **[LlamaIndex](https://www.llamaindex.ai)** — for document indexing and retrieval framework
-- **[Streamlit](https://streamlit.io)** — for the interactive web interface
-- **[FastEmbed](https://github.com/qdrant/fastembed)** — for efficient embeddings
+- **Embeddings**: FastEmbed with `BAAI/bge-small-en-v1.5`
+- **Index**: LlamaIndex `VectorStoreIndex` (in-memory)
+- **LLM**: Sarvam AI Chat Completions API (`/v1/chat/completions`)
+- **UI**: Streamlit with chat-style interface
 
----
+## Troubleshooting
 
-### 📧 Contact
+| Issue | Solution |
+|-------|----------|
+| API connection failed | Verify API key at [dashboard.sarvam.ai](https://dashboard.sarvam.ai/key-management) |
+| Slow responses | Use sarvam-30b, lower max_tokens, or disable reasoning |
+| Memory issues | Process fewer/larger chunks, reduce Top K |
+| Import errors | Run `pip install -r requirements.txt` in a fresh virtual environment |
+
+## License
+
+MIT
+
+## Contact
 
 **Manish Tiwari**
-
-- 🐦 Twitter: [@compmanish](https://x.com/compmanish)
-- 📧 Email: [Mail](mailto:manish.tiwari.09@zohomail.in)
-- 🔗 Project Link: [https://github.com/predictivemanish/pdf-qa-sarvam](https://github.com/predictivemanish/pdf-qa-sarvam)
-
----
+- Twitter: [@compmanish](https://x.com/compmanish)
+- Email: manish.tiwari.09@zohomail.in

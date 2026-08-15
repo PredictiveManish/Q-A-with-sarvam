@@ -1,0 +1,53 @@
+2026-08-15 22:24:43,170 - SarvamQA - INFO - [app.py:64] - ============================================================
+2026-08-15 22:24:43,170 - SarvamQA - INFO - [app.py:65] - Sarvam QA Application Starting
+2026-08-15 22:24:43,170 - SarvamQA - INFO - [app.py:66] - Python version: 3.11.15 | packaged by conda-forge | (main, Jun 11 2026, 03:27:10) [MSC v.1944 64 bit (AMD64)]
+2026-08-15 22:24:43,170 - SarvamQA - INFO - [app.py:67] - Streamlit version: 1.59.2
+2026-08-15 22:24:43,171 - SarvamQA - INFO - [app.py:68] - ============================================================
+2026-08-15 22:24:43,171 - SarvamQA - INFO - [app.py:71] - Attempting to import LlamaIndex components...
+2026-08-15 22:24:45,113 - SarvamQA - INFO - [app.py:80] - Successfully imported all LlamaIndex components
+2026-08-15 22:24:45,218 - SarvamQA - INFO - [app.py:86] - Page configuration set
+2026-08-15 22:24:45,220 - SarvamQA - DEBUG - [app.py:520] - Initializing session state
+2026-08-15 22:24:45,223 - SarvamQA - INFO - [app.py:846] - Application instance starting
+2026-08-15 22:24:45,224 - SarvamQA - INFO - [app.py:550] - Starting main application
+2026-08-15 22:24:45,413 - SarvamQA - INFO - [app.py:848] - Application shutdown
+2026-08-15 22:24:55,892 - SarvamQA - INFO - [app.py:64] - ============================================================
+2026-08-15 22:24:55,892 - SarvamQA - INFO - [app.py:65] - Sarvam QA Application Starting
+2026-08-15 22:24:55,893 - SarvamQA - INFO - [app.py:66] - Python version: 3.11.15 | packaged by conda-forge | (main, Jun 11 2026, 03:27:10) [MSC v.1944 64 bit (AMD64)]
+2026-08-15 22:24:55,893 - SarvamQA - INFO - [app.py:67] - Streamlit version: 1.59.2
+2026-08-15 22:24:55,894 - SarvamQA - INFO - [app.py:68] - ============================================================
+2026-08-15 22:24:55,894 - SarvamQA - INFO - [app.py:71] - Attempting to import LlamaIndex components...
+2026-08-15 22:24:58,203 - SarvamQA - INFO - [app.py:80] - Successfully imported all LlamaIndex components
+2026-08-15 22:24:58,272 - SarvamQA - INFO - [app.py:86] - Page configuration set
+2026-08-15 22:24:58,278 - SarvamQA - DEBUG - [app.py:520] - Initializing session state
+2026-08-15 22:24:58,280 - SarvamQA - INFO - [app.py:846] - Application instance starting
+2026-08-15 22:24:58,280 - SarvamQA - INFO - [app.py:550] - Starting main application
+2026-08-15 22:24:58,482 - SarvamQA - INFO - [app.py:848] - Application shutdown
+2026-08-15 22:25:07,640 - SarvamQA - INFO - [app.py:64] - ============================================================
+2026-08-15 22:25:07,642 - SarvamQA - INFO - [app.py:65] - Sarvam QA Application Starting
+2026-08-15 22:25:07,646 - SarvamQA - INFO - [app.py:66] - Python version: 3.11.15 | packaged by conda-forge | (main, Jun 11 2026, 03:27:10) [MSC v.1944 64 bit (AMD64)]
+2026-08-15 22:25:07,647 - SarvamQA - INFO - [app.py:67] - Streamlit version: 1.59.2
+2026-08-15 22:25:07,650 - SarvamQA - INFO - [app.py:68] - ============================================================
+2026-08-15 22:25:07,651 - SarvamQA - INFO - [app.py:71] - Attempting to import LlamaIndex components...
+2026-08-15 22:25:07,654 - SarvamQA - INFO - [app.py:80] - Successfully imported all LlamaIndex components
+2026-08-15 22:25:07,656 - SarvamQA - INFO - [app.py:86] - Page configuration set
+2026-08-15 22:25:07,670 - SarvamQA - DEBUG - [app.py:520] - Initializing session state
+2026-08-15 22:25:07,673 - SarvamQA - INFO - [app.py:846] - Application instance starting
+2026-08-15 22:25:07,677 - SarvamQA - INFO - [app.py:550] - Starting main application
+2026-08-15 22:25:07,716 - SarvamQA - INFO - [app.py:848] - Application shutdown
+2026-08-15 22:25:08,877 - SarvamQA - INFO - [app.py:64] - ============================================================
+2026-08-15 22:25:08,879 - SarvamQA - INFO - [app.py:65] - Sarvam QA Application Starting
+2026-08-15 22:25:08,884 - SarvamQA - INFO - [app.py:66] - Python version: 3.11.15 | packaged by conda-forge | (main, Jun 11 2026, 03:27:10) [MSC v.1944 64 bit (AMD64)]
+2026-08-15 22:25:08,889 - SarvamQA - INFO - [app.py:67] - Streamlit version: 1.59.2
+2026-08-15 22:25:08,898 - SarvamQA - INFO - [app.py:68] - ============================================================
+2026-08-15 22:25:08,931 - SarvamQA - INFO - [app.py:71] - Attempting to import LlamaIndex components...
+2026-08-15 22:25:08,945 - SarvamQA - INFO - [app.py:80] - Successfully imported all LlamaIndex components
+2026-08-15 22:25:08,991 - SarvamQA - INFO - [app.py:86] - Page configuration set
+2026-08-15 22:25:09,037 - SarvamQA - DEBUG - [app.py:520] - Initializing session state
+2026-08-15 22:25:09,045 - SarvamQA - INFO - [app.py:846] - Application instance starting
+2026-08-15 22:25:09,058 - SarvamQA - INFO - [app.py:550] - Starting main application
+2026-08-15 22:25:09,126 - SarvamQA - INFO - [app.py:651] - Process Documents button clicked
+2026-08-15 22:25:09,141 - SarvamQA - INFO - [app.py:431] - Saving 1 uploaded files
+2026-08-15 22:25:09,160 - SarvamQA - DEBUG - [app.py:434] - Created temporary directory: C:\Users\manis\AppData\Local\Temp\sarvam_qa_d2cdfa1l
+2026-08-15 22:25:09,171 - SarvamQA - DEBUG - [app.py:441] - Saved: shor.pdf (327685 bytes)
+2026-08-15 22:25:09,192 - SarvamQA - INFO - [app.py:456] - [1/1] Processing: shor.pdf (.pdf, 327685 bytes)
+2026-08-15 22:25:15,266 - SarvamQA - INFO - [app.py:506] - Processed shor.pdf (28 chunks)
